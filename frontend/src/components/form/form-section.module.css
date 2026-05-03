@@ -1,0 +1,45 @@
+.root {
+  display: grid;
+  gap: 1.5rem;
+  border-bottom: 1px solid hsl(var(--border));
+  padding-bottom: 2rem;
+}
+
+.root:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .root {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.headingGroup > * + * {
+  margin-top: 0.25rem;
+}
+
+.title {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 600;
+}
+
+.description {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: hsl(var(--muted-foreground));
+}
+
+.fields {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .fields {
+    grid-column: span 2 / span 2;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,68 @@
+.link {
+  display: flex;
+  align-items: center;
+  gap: 0.95rem;
+  width: 100%;
+  border: 1px solid transparent;
+  border-radius: 1.15rem;
+  padding: 0.95rem 1rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #617163;
+  background: transparent;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.link:hover {
+  background: rgba(239, 245, 231, 0.95);
+  border-color: rgba(196, 214, 184, 0.72);
+  color: #243328;
+}
+
+.link:active {
+  transform: translateY(1px);
+}
+
+.linkActive {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbef 100%);
+  border-color: rgba(172, 205, 165, 0.95);
+  color: #243328;
+  box-shadow:
+    0 14px 34px rgba(145, 161, 128, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.iconWrap {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.9rem;
+  color: #617163;
+  background: rgba(228, 236, 220, 0.88);
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.link:hover .iconWrap {
+  background: rgba(215, 233, 204, 0.92);
+  color: #243328;
+}
+
+.iconWrapActive {
+  background: linear-gradient(135deg, #7ebc88, #9dcda4);
+  color: #243328;
+  transform: scale(1.02);
+  box-shadow: 0 10px 24px rgba(126, 188, 136, 0.24);
+}
+
+.label {
+  line-height: 1.2;
+}

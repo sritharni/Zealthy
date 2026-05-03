@@ -1,0 +1,43 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  border-radius: calc(var(--radius) - 2px);
+  border: 1px solid transparent;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+  transition-property: color, background-color, border-color;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.variant_default {
+  background-color: hsl(var(--primary) / 0.1);
+  color: hsl(var(--primary));
+}
+
+.variant_secondary {
+  background-color: hsl(var(--secondary));
+  color: hsl(var(--secondary-foreground));
+}
+
+.variant_outline {
+  border-color: hsl(var(--border));
+  color: hsl(var(--foreground));
+}
+
+.variant_success {
+  background-color: rgb(209 250 229);
+  color: rgb(4 120 87);
+}
+
+.variant_warning {
+  background-color: rgb(254 243 199);
+  color: rgb(180 83 9);
+}
+
+.variant_destructive {
+  background-color: hsl(var(--destructive) / 0.1);
+  color: hsl(var(--destructive));
+}

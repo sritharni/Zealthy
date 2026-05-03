@@ -1,0 +1,57 @@
+.desktop {
+  display: none;
+  border-radius: var(--radius);
+  border: 1px solid hsl(var(--border));
+}
+
+.mobile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .desktop {
+    display: block;
+  }
+  .mobile {
+    display: none;
+  }
+}
+
+.headSkeleton {
+  height: 0.75rem;
+  width: 5rem;
+}
+
+.cellSkeleton {
+  height: 1rem;
+  width: 100%;
+  max-width: 160px;
+}
+
+.card {
+  border-radius: var(--radius);
+  border: 1px solid hsl(var(--border));
+  background-color: hsl(var(--card));
+  padding: 1rem;
+}
+
+.card > * + * {
+  margin-top: 0.75rem;
+}
+
+.lineHalf {
+  height: 1.25rem;
+  width: 50%;
+}
+
+.lineThreeQuarter {
+  height: 1rem;
+  width: 75%;
+}
+
+.lineTwoThird {
+  height: 1rem;
+  width: 66.6667%;
+}

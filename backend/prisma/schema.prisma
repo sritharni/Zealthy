@@ -1,0 +1,117 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  NON_BINARY
+  OTHER
+  UNDISCLOSED
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+enum RepeatSchedule {
+  NONE
+  DAILY
+  WEEKLY
+  MONTHLY
+}
+
+enum RefillSchedule {
+  MONTHLY
+  QUARTERLY
+  YEARLY
+}
+
+model Patient {
+  id           String   @id @default(cuid())
+  firstName    String
+  lastName     String
+  email        String   @unique
+  passwordHash String
+  phone        String
+  dob          DateTime @db.Date
+  gender       Gender   @default(UNDISCLOSED)
+
+  addressLine1 String?
+  addressLine2 String?
+  city         String?
+  state        String?  @db.VarChar(2)
+  postalCode   String?
+
+  notes String? @db.Text
+
+  appointments Appointment[]
+  prescriptions Prescription[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([lastName, firstName])
+  @@index([createdAt])
+}
+
+model MedicationCatalog {
+  id             String         @id @default(cuid())
+  medicationName String
+  dosage         String
+  prescriptions  Prescription[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@unique([medicationName, dosage])
+  @@index([medicationName])
+}
+
+model Appointment {
+  id               String            @id @default(cuid())
+  patient          Patient           @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  patientId        String
+  providerName     String
+  appointmentDate  DateTime
+  repeatSchedule   RepeatSchedule    @default(NONE)
+  repeatEndDate    DateTime?         @db.Date
+  notes            String?           @db.Text
+  status           AppointmentStatus @default(SCHEDULED)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  @@index([patientId, appointmentDate])
+  @@index([status, appointmentDate])
+  @@index([repeatSchedule, appointmentDate])
+}
+
+model Prescription {
+  id                  String            @id @default(cuid())
+  patient             Patient           @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  patientId           String
+  medicationCatalog   MedicationCatalog? @relation(fields: [medicationCatalogId], references: [id], onDelete: SetNull)
+  medicationCatalogId String?
+  medicationName      String
+  dosage              String
+  quantity            Int
+  refillDate          DateTime          @db.Date
+  refillSchedule      RefillSchedule
+  instructions        String?           @db.Text
+  isActive            Boolean           @default(true)
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+
+  @@index([patientId, refillDate])
+  @@index([patientId, isActive])
+  @@index([medicationName])
+}

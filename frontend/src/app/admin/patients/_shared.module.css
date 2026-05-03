@@ -1,0 +1,82 @@
+.stack > * + * {
+  margin-top: 1.5rem;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: hsl(var(--muted-foreground));
+  text-decoration: none;
+  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.backLink:hover {
+  color: hsl(var(--foreground));
+}
+
+.backIcon {
+  height: 1rem;
+  width: 1rem;
+}
+
+.skeletonBack {
+  height: 1rem;
+  width: 8rem;
+}
+
+.skeletonHeading {
+  height: 2rem;
+  width: 11rem;
+}
+
+.skeletonHeadingWide {
+  height: 2rem;
+  width: 12rem;
+}
+
+.skeletonSubheading {
+  height: 1rem;
+  width: 24rem;
+}
+
+.skeletonSubheadingWide {
+  height: 1rem;
+  width: 20rem;
+}
+
+.headingSkeletonGroup > * + * {
+  margin-top: 0.5rem;
+}
+
+.cardSkeletonHeader {
+  height: 1.25rem;
+  width: 8rem;
+}
+
+.cardGrid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .cardGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.fieldSkeletonGroup > * + * {
+  margin-top: 0.5rem;
+}
+
+.fieldLabelSkeleton {
+  height: 0.75rem;
+  width: 6rem;
+}
+
+.fieldInputSkeleton {
+  height: 2.25rem;
+  width: 100%;
+}

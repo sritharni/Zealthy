@@ -1,0 +1,41 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.hero {
+  border: 1px solid hsl(var(--border));
+  border-radius: 2rem;
+  background: white;
+  padding: 1.5rem;
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.06);
+}
+
+.summaryGrid {
+  display: grid;
+  gap: 1rem;
+}
+
+.twoColumnGrid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.listIntro {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .summaryGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .twoColumnGrid {
+    grid-template-columns: 0.9fr 1.1fr;
+  }
+}

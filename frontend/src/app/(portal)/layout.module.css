@@ -1,0 +1,92 @@
+.shell {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(144, 208, 152, 0.18), transparent 28%),
+    radial-gradient(circle at 82% 18%, rgba(190, 216, 176, 0.14), transparent 22%),
+    linear-gradient(180deg, #b7e5be 0%, #eef2e4 24%, #f7f4e8 100%);
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  border-bottom: 1px solid rgba(188, 210, 180, 0.66);
+  background: rgba(250, 248, 239, 0.82);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px rgba(111, 133, 105, 0.08);
+}
+
+.headerInner {
+  display: flex;
+  height: 4rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.identity {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brandPill {
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #7ebc88, #9dcda4);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #243328;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.layout {
+  display: grid;
+  gap: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: 1.5rem;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 1rem;
+  box-shadow: 0 16px 44px rgba(111, 133, 105, 0.08);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 1rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #475569;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.navLink:hover {
+  background: #f1f5f9;
+  color: #020617;
+}
+
+@media (min-width: 1024px) {
+  .layout {
+    grid-template-columns: 220px 1fr;
+  }
+}

@@ -1,0 +1,19 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.error {
+  font-size: 0.875rem;
+  color: hsl(var(--destructive));
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  border-top: 1px solid hsl(var(--border));
+  padding-top: 1.5rem;
+}

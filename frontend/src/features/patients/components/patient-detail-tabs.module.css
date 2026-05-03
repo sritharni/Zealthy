@@ -1,0 +1,40 @@
+.root {
+  width: 100%;
+}
+
+.list {
+  display: grid;
+  width: 100%;
+  height: auto;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.25rem;
+  border-radius: 1.5rem;
+  background: linear-gradient(180deg, #f6f4ea 0%, #edf2e6 100%);
+  padding: 0.25rem;
+}
+
+.trigger {
+  min-height: 3.25rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #68816d;
+}
+
+.trigger:hover {
+  background: rgb(255 255 255 / 0.7);
+  color: #2f4334;
+}
+
+.trigger[data-state="active"] {
+  background: linear-gradient(180deg, #fffdf6 0%, #f8f4e8 100%);
+  color: #324538;
+  box-shadow:
+    0 10px 24px rgb(117 145 116 / 0.08),
+    inset 0 1px 0 rgb(255 255 255 / 0.9);
+}
+
+.content {
+  margin-top: 1rem;
+}
