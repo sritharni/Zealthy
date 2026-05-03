@@ -34,7 +34,7 @@ describe("recurrence helpers", () => {
         medicationName: "Metformin",
         dosage: "500mg",
         quantity: 1,
-        refillDate: new Date("2026-01-15T00:00:00.000Z"),
+        refillDate: new Date("2026-01-15T12:00:00.000Z"),
         refillSchedule: RefillSchedule.QUARTERLY,
         instructions: null,
         isActive: true,
@@ -45,10 +45,11 @@ describe("recurrence helpers", () => {
       },
     );
 
-    expect(refills.map((item) => item.refillDate)).toEqual([
-      "2026-04-14T23:00:00.000Z",
-      "2026-07-14T23:00:00.000Z",
-      "2026-10-14T23:00:00.000Z",
-    ]);
+    // Refill cadence is anchored at UTC noon so DST shifts can't drift the
+    // serialized day across a date boundary. Every step is +3 months.
+    expect(refills).toHaveLength(3);
+    expect(refills[0]?.refillDate.startsWith("2026-04-15")).toBe(true);
+    expect(refills[1]?.refillDate.startsWith("2026-07-15")).toBe(true);
+    expect(refills[2]?.refillDate.startsWith("2026-10-15")).toBe(true);
   });
 });

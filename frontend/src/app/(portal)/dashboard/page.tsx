@@ -1,6 +1,5 @@
-import { addDays, isBefore, parseISO, startOfDay } from "date-fns";
 import { CalendarClock, PillBottle } from "lucide-react";
-import { apiRoutes, type PatientDetail } from "@/shared";
+import { apiRoutes, type PatientPortalSummary } from "@/shared";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { requirePatientSession } from "@/lib/auth/session";
@@ -12,15 +11,9 @@ import styles from "./page.module.css";
 
 export default async function PortalDashboardPage() {
   const session = await requirePatientSession();
-  const patient = await serverApi.get<PatientDetail>(apiRoutes.patients.item(session.sub));
-  const sevenDayWindow = addDays(startOfDay(new Date()), 7);
-  const upcomingAppointments7d = patient.upcomingAppointments.filter((appointment) =>
-    isBefore(parseISO(appointment.appointmentDate), sevenDayWindow),
+  const patient = await serverApi.get<PatientPortalSummary>(
+    apiRoutes.patients.portalSummary(session.sub),
   );
-  const upcomingRefills7d = patient.upcomingRefills.filter((refill) =>
-    isBefore(parseISO(refill.refillDate), sevenDayWindow),
-  );
-  const activePrescriptionCount = patient.prescriptions.filter((prescription) => prescription.isActive).length;
 
   return (
     <div className={styles.root}>
@@ -36,9 +29,9 @@ export default async function PortalDashboardPage() {
       </section>
 
       <div className={styles.summaryGrid}>
-        <SummaryCard icon={<CalendarClock className="h-5 w-5" />} label="Appointments in 7 days" value={String(upcomingAppointments7d.length)} />
-        <SummaryCard icon={<PillBottle className="h-5 w-5" />} label="Refills in 7 days" value={String(upcomingRefills7d.length)} />
-        <SummaryCard icon={<PillBottle className="h-5 w-5" />} label="Active prescriptions" value={String(activePrescriptionCount)} />
+        <SummaryCard icon={<CalendarClock className="h-5 w-5" />} label="Appointments in 7 days" value={String(patient.stats.appointmentCount7d)} />
+        <SummaryCard icon={<PillBottle className="h-5 w-5" />} label="Refills in 7 days" value={String(patient.stats.refillCount7d)} />
+        <SummaryCard icon={<PillBottle className="h-5 w-5" />} label="Active prescriptions" value={String(patient.stats.activePrescriptionCount)} />
       </div>
 
       <div className={styles.twoColumnGrid}>
@@ -59,8 +52,8 @@ export default async function PortalDashboardPage() {
             <CardTitle className="text-base">Upcoming appointments</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            {upcomingAppointments7d.length > 0 ? (
-              upcomingAppointments7d.map((appointment) => (
+            {patient.upcomingAppointments.length > 0 ? (
+              patient.upcomingAppointments.map((appointment) => (
                 <div key={appointment.id} className="rounded-2xl border p-4">
                   <p className="font-medium">{appointment.providerName}</p>
                   <p className="text-sm text-muted-foreground">{formatDateTime(appointment.appointmentDate)}</p>
@@ -78,8 +71,8 @@ export default async function PortalDashboardPage() {
           <CardTitle className="text-base">Upcoming refills</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          {upcomingRefills7d.length > 0 ? (
-            upcomingRefills7d.map((refill) => (
+          {patient.upcomingRefills.length > 0 ? (
+            patient.upcomingRefills.map((refill) => (
               <div key={refill.id} className="rounded-2xl border p-4">
                 <p className="font-medium">
                   {refill.medicationName} {refill.dosage}

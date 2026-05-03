@@ -1,4 +1,4 @@
-import { apiRoutes, type PatientDetail } from "@/shared";
+import { apiRoutes, type PatientPortalSummary } from "@/shared";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,7 +10,9 @@ import styles from "./page.module.css";
 
 export default async function PortalPrescriptionsPage() {
   const session = await requirePatientSession();
-  const patient = await serverApi.get<PatientDetail>(apiRoutes.patients.item(session.sub));
+  const patient = await serverApi.get<PatientPortalSummary>(
+    apiRoutes.patients.portalSummary(session.sub),
+  );
 
   return (
     <div className={styles.root}>

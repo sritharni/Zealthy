@@ -1,4 +1,3 @@
-import { createSchedulingDateRange, expandAppointmentOccurrences } from "@/features/appointments/lib/recurrence";
 import { patientRepository } from "@/features/patients/server/patient-repository";
 import { ApiError } from "@/lib/http/api-error";
 
@@ -7,12 +6,11 @@ import type {
   AppointmentUpsertOutput,
   AppointmentListQuery,
 } from "../schema";
-import type { AppointmentOccurrence, AppointmentRecord } from "../types";
+import type { AppointmentRecord } from "../types";
 import { appointmentRepository } from "./appointment-repository";
 
 export const appointmentService = {
   list,
-  listOccurrencesForPatient,
   getById,
   create,
   update,
@@ -21,29 +19,6 @@ export const appointmentService = {
 
 async function list(query: AppointmentListQuery): Promise<AppointmentRecord[]> {
   return appointmentRepository.list(query);
-}
-
-async function listOccurrencesForPatient(patientId: string): Promise<AppointmentOccurrence[]> {
-  const appointments = await appointmentRepository.list({ patientId });
-  const range = createSchedulingDateRange();
-
-  return appointments
-    .flatMap((appointment) =>
-      expandAppointmentOccurrences(
-        {
-          id: appointment.id,
-          patientId: appointment.patientId,
-          providerName: appointment.providerName,
-          appointmentDate: new Date(appointment.appointmentDate),
-          repeatSchedule: appointment.repeatSchedule,
-          repeatEndDate: appointment.repeatEndDate ? new Date(appointment.repeatEndDate) : null,
-          notes: appointment.notes,
-          status: appointment.status,
-        },
-        range,
-      ),
-    )
-    .sort((a, b) => a.appointmentDate.localeCompare(b.appointmentDate));
 }
 
 async function getById(id: string): Promise<AppointmentRecord> {

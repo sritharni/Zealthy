@@ -3,7 +3,7 @@
 import { AppointmentStatus, RepeatSchedule } from "@/shared";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Edit3, Plus, Trash2 } from "lucide-react";
-import { useMemo, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -217,18 +217,15 @@ function AppointmentDialog({
   const [open, setOpen] = useState(false);
   const form = useForm<AppointmentUpsertInput>({
     resolver: zodResolver(AppointmentUpsertSchema),
-    defaultValues: useMemo(
-      () => ({
-        patientId,
-        providerName: initial?.providerName ?? "",
-        appointmentDate: initial?.appointmentDate?.slice(0, 16) ?? "",
-        repeatSchedule: initial?.repeatSchedule ?? RepeatSchedule.NONE,
-        repeatEndDate: initial?.repeatEndDate?.slice(0, 10) ?? "",
-        notes: initial?.notes ?? "",
-        status: initial?.status ?? AppointmentStatus.SCHEDULED,
-      }),
-      [initial, patientId],
-    ),
+    defaultValues: {
+      patientId,
+      providerName: initial?.providerName ?? "",
+      appointmentDate: initial?.appointmentDate?.slice(0, 16) ?? "",
+      repeatSchedule: initial?.repeatSchedule ?? RepeatSchedule.NONE,
+      repeatEndDate: initial?.repeatEndDate?.slice(0, 10) ?? "",
+      notes: initial?.notes ?? "",
+      status: initial?.status ?? AppointmentStatus.SCHEDULED,
+    },
   });
 
   const submit = form.handleSubmit(async (values) => {

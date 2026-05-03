@@ -7,7 +7,7 @@ import type {
   PatientCreateInput,
   PatientUpdateInput,
 } from "../schema";
-import type { PatientDetail, PatientListItem } from "../types";
+import type { PatientDetail, PatientListItem, PatientPortalSummary } from "../types";
 
 /**
  * Thin transport-layer wrapper. No business logic here — just maps a
@@ -25,6 +25,13 @@ export const patientApi = {
 
   async getById(id: string): Promise<PatientDetail> {
     const { data } = await apiClient.get<PatientDetail>(apiRoutes.patients.item(id));
+    return data;
+  },
+
+  async getPortalSummary(id: string): Promise<PatientPortalSummary> {
+    const { data } = await apiClient.get<PatientPortalSummary>(
+      apiRoutes.patients.portalSummary(id),
+    );
     return data;
   },
 

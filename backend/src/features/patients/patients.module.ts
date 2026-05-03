@@ -1,11 +1,13 @@
 import { Module } from "@nestjs/common";
 
-import { PatientsApplicationService } from "./patients.application-service";
+import { AuthModule } from "@/features/auth/auth.module";
+import { PortalSessionGuard } from "@/common/guards/portal-session.guard";
+
 import { PatientsController } from "./patients.controller";
 
 @Module({
+  imports: [AuthModule],
   controllers: [PatientsController],
-  providers: [PatientsApplicationService],
-  exports: [PatientsApplicationService],
+  providers: [PortalSessionGuard],
 })
 export class PatientsModule {}

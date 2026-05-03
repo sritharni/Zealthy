@@ -7,6 +7,7 @@ export const apiRoutes = {
   patients: {
     collection: "/patients",
     item: (id: string) => `/patients/${id}`,
+    portalSummary: (id: string) => `/patients/${id}/portal-summary`,
   },
   appointments: {
     collection: "/appointments",

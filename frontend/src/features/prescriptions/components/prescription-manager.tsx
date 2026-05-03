@@ -3,7 +3,7 @@
 import { RefillSchedule } from "@/shared";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Edit3, Plus, Trash2 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -212,20 +212,17 @@ function PrescriptionDialog({
   const [open, setOpen] = useState(false);
   const form = useForm<PrescriptionUpsertInput>({
     resolver: zodResolver(PrescriptionUpsertSchema),
-    defaultValues: useMemo(
-      () => ({
-        patientId,
-        medicationCatalogId: initial?.medicationCatalogId ?? "",
-        medicationName: initial?.medicationName ?? "",
-        dosage: initial?.dosage ?? "",
-        quantity: initial?.quantity ?? 1,
-        refillDate: initial?.refillDate ?? "",
-        refillSchedule: initial?.refillSchedule ?? RefillSchedule.MONTHLY,
-        instructions: initial?.instructions ?? "",
-        isActive: initial?.isActive ?? true,
-      }),
-      [initial, patientId],
-    ),
+    defaultValues: {
+      patientId,
+      medicationCatalogId: initial?.medicationCatalogId ?? "",
+      medicationName: initial?.medicationName ?? "",
+      dosage: initial?.dosage ?? "",
+      quantity: initial?.quantity ?? 1,
+      refillDate: initial?.refillDate ?? "",
+      refillSchedule: initial?.refillSchedule ?? RefillSchedule.MONTHLY,
+      instructions: initial?.instructions ?? "",
+      isActive: initial?.isActive ?? true,
+    },
   });
 
   const selectedCatalogId = form.watch("medicationCatalogId");
