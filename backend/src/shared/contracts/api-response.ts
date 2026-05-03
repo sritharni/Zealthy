@@ -1,4 +1,4 @@
-import type { ApiErrorCode } from "./api-error";
+import type { ApiErrorCode } from "./api-error.js";
 
 export type ApiSuccess<T> = {
   data: T;

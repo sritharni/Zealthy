@@ -5,7 +5,7 @@ import {
   REPEAT_SCHEDULES,
   type AppointmentStatus,
   type RepeatSchedule,
-} from "./enums";
+} from "./enums.js";
 
 const trimmed = z.string().trim();
 const optionalTrimmed = trimmed.optional().or(z.literal("")).transform((value) => value || undefined);
@@ -23,7 +23,10 @@ const AppointmentBaseSchema = z.object({
   status: z.enum(APPOINTMENT_STATUSES).default("SCHEDULED"),
 });
 
-export const AppointmentUpsertSchema = AppointmentBaseSchema.superRefine((value, ctx) => {
+export const AppointmentUpsertSchema = AppointmentBaseSchema.superRefine((
+  value: z.output<typeof AppointmentBaseSchema>,
+  ctx,
+) => {
   if (value.repeatSchedule !== "NONE" && !value.repeatEndDate) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,

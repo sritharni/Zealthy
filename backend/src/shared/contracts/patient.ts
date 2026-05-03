@@ -1,9 +1,9 @@
 import { z } from "zod";
 
-import { type AppointmentOccurrence, type AppointmentRecord } from "./appointment";
-import { GENDERS, type Gender } from "./enums";
-import { type PrescriptionRecord, type PrescriptionRefillOccurrence } from "./prescription";
-import { PaginationParamsSchema } from "../lib/pagination";
+import { type AppointmentOccurrence, type AppointmentRecord } from "./appointment.js";
+import { GENDERS, type Gender } from "./enums.js";
+import { type PrescriptionRecord, type PrescriptionRefillOccurrence } from "./prescription.js";
+import { PaginationParamsSchema } from "../lib/pagination.js";
 
 const TWO_LETTER_STATE = /^[A-Z]{2}$/;
 const PHONE_DIGIT_COUNT = /^\+?[\d\s().-]{10,20}$/;

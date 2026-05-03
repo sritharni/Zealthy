@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { REFILL_SCHEDULES, type RefillSchedule } from "./enums";
+import { REFILL_SCHEDULES, type RefillSchedule } from "./enums.js";
 
 const trimmed = z.string().trim();
 const optionalTrimmed = trimmed.optional().or(z.literal("")).transform((value) => value || undefined);
