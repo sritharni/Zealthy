@@ -3,12 +3,12 @@ import "reflect-metadata";
 import { NestFactory } from "@nestjs/core";
 import { ExpressAdapter } from "@nestjs/platform-express";
 
-import { ApiExceptionFilter } from "@/common/filters/api-exception.filter";
-import { AppModule } from "@/app.module";
-import { createCorsOptions } from "@/config/cors";
+import { ApiExceptionFilter } from "../dist/common/filters/api-exception.filter.js";
+import { AppModule } from "../dist/app.module.js";
+import { createCorsOptions } from "../dist/config/cors.js";
 
 const adapter = new ExpressAdapter();
-let bootstrapPromise: Promise<ReturnType<ExpressAdapter["getInstance"]>> | null = null;
+let bootstrapPromise = null;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, adapter, { cors: false });
@@ -22,14 +22,7 @@ async function bootstrap() {
   return adapter.getInstance();
 }
 
-export default async function handler(
-  req: { method?: string; url?: string },
-  res: {
-    statusCode: number;
-    setHeader(name: string, value: string): void;
-    end(body: string): void;
-  },
-) {
+export default async function handler(req, res) {
   try {
     const server = await (bootstrapPromise ??= bootstrap().catch((error) => {
       bootstrapPromise = null;
@@ -37,7 +30,7 @@ export default async function handler(
     }));
 
     return server(req, res);
-  } catch (error) {
+  } catch {
     res.statusCode = 500;
     res.setHeader("content-type", "application/json");
     res.end(
