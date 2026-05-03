@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common";
-import { jwtVerify, SignJWT } from "jose";
 import type { Request } from "express";
 
 import type { AuthSession, SessionUser } from "@/shared";
@@ -10,6 +9,14 @@ import { serverEnv } from "@/lib/env";
 import { ApiError } from "@/lib/http/api-error";
 
 const SESSION_TTL_SECONDS = 60 * 60 * 24 * 7;
+let joseModulePromise: Promise<typeof import("jose")> | null = null;
+
+function loadJose(): Promise<typeof import("jose")> {
+  joseModulePromise ??= Function("specifier", "return import(specifier)")("jose") as Promise<
+    typeof import("jose")
+  >;
+  return joseModulePromise;
+}
 
 @Injectable()
 export class AuthService {
@@ -41,6 +48,7 @@ export class AuthService {
       lastName: patient.lastName,
     } satisfies SessionUser;
 
+    const { SignJWT } = await loadJose();
     const token = await new SignJWT(session)
       .setProtectedHeader({ alg: "HS256" })
       .setIssuedAt()
@@ -64,6 +72,7 @@ export class AuthService {
     }
 
     try {
+      const { jwtVerify } = await loadJose();
       const { payload } = await jwtVerify(token, this.getSecret());
       if (
         typeof payload.sub !== "string" ||
