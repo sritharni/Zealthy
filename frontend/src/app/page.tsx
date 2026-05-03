@@ -23,7 +23,7 @@ export default async function HomePage() {
           <div className={styles.eyebrow}>Zealthy Patient Portal</div>
           <div className={styles.headingGroup}>
             <h1 className={styles.title}>
-              A polished mini EMR with a patient experience that feels production ready.
+              A modern patient platform designed for a seamless, real-world healthcare experience.
             </h1>
             <p className={styles.subtitle}>
               Review upcoming care, medication refills, and your health profile in one place.
@@ -45,7 +45,7 @@ export default async function HomePage() {
             <FeatureCard
               icon={<ShieldCheck className={styles.featureIcon} />}
               title="Secure access"
-              description="Patients sign in with hashed credentials and an HTTP-only session cookie."
+              description="Patients can securely sign in and stay logged in safely."
             />
           </div>
 
