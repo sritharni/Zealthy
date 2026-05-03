@@ -1,6 +1,7 @@
 {
   "name": "zealthy-emr-backend",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "node scripts/run-with-env.mjs node scripts/dev.mjs",
     "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
